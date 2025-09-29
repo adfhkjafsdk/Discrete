@@ -1,9 +1,8 @@
 import Mathlib
 
 theorem example_1_4_2_1 (R S : Prop) :
-  (R ∨ S) ∨ ¬(R ∨ S) := by
+  (R∨S)∨¬(R∨S) := by
   apply Classical.em
-
 
 theorem example_1_4_2_2 (R S P Q : Prop) :
   ((R∨S)∧((R∨S)→(P∨Q)))→(P∨Q) := by
