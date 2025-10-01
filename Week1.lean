@@ -129,3 +129,99 @@ theorem exercise_2_1_6 (P Q : Prop) :
   rw [not_and_or]
   repeat rw [not_or, not_not]
   rw [@and_comm Q (¬P)]
+
+theorem my_and_comm (P Q : Prop) :
+  P∧Q ↔ Q∧P := by
+  apply Iff.intro
+  · intro h
+    apply And.intro
+    · exact h.right
+    · exact h.left
+  · intro h
+    apply And.intro
+    · exact h.right
+    · exact h.left
+
+theorem my_and_assoc (P Q R : Prop) :
+  (P∧Q)∧R ↔ P∧(Q∧R) := by
+  apply Iff.intro
+  · intro h
+    apply And.intro
+    · exact h.left.left
+    · apply And.intro
+      · exact h.left.right
+      · exact h.right
+  · intro h
+    apply And.intro
+    · apply And.intro
+      · exact h.left
+      · exact h.right.left
+    · exact h.right.right
+
+theorem my_or_comm (P Q : Prop) :
+  P∨Q ↔ Q∨P := by
+  apply Iff.intro
+  · intro h
+    cases h with
+      | inl hl =>
+        apply Or.intro_right
+        exact hl
+      | inr hr =>
+        apply Or.intro_left
+        exact hr
+  · intro h
+    cases h with
+      | inl hl =>
+        apply Or.intro_right
+        exact hl
+      | inr hr =>
+        apply Or.intro_left
+        exact hr
+
+theorem my_or_assoc (P Q R : Prop) :
+  (P∨Q)∨R ↔ P∨(Q∨R) := by
+  apply Iff.intro
+  · intro h
+    cases h with
+      | inl hl =>
+        cases hl with
+        | inl hll =>
+          apply Or.intro_left
+          exact hll
+        | inr hlr =>
+          apply Or.intro_right
+          apply Or.intro_left
+          exact hlr
+      | inr hr =>
+        repeat apply Or.intro_right
+        exact hr
+  · intro h
+    cases h with
+      | inl hl =>
+        repeat apply Or.intro_left
+        exact hl
+      | inr hr =>
+        cases hr with
+        | inl hrl =>
+          apply Or.intro_left
+          apply Or.intro_right
+          exact hrl
+        | inr hrr =>
+          apply Or.intro_right
+          exact hrr
+
+theorem my_not_and_or (P Q : Prop) :
+  ¬(P∧Q) ↔ ¬P∨¬Q := by
+  by_cases h: P
+  · rw [← @iff_true P] at h
+    rw [h, not_true, true_and, false_or]
+  · rw [← @iff_false P] at h
+    rw [h, not_false_iff, false_and, true_or, not_false_iff]
+
+theorem my_not_or (P Q : Prop) :
+  ¬(P∨Q) ↔ ¬P∧¬Q := by
+  by_cases h: P
+  · rw [← @iff_true P] at h
+    rw [h, not_true, true_or, false_and, not_true]
+  · rw [← @iff_false P] at h
+    rw [h, not_false_iff, false_or, true_and]

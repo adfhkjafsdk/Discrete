@@ -52,3 +52,23 @@ lemma iff_not_self_iff_false (P : Prop) :
   nth_rw 4 [← @not_not P]
   repeat rw [imp_not_self]
   rw [and_not_self_iff]
+
+theorem exercise_2_1_4 (P Q : Prop) :
+  ((P↔Q)↔((P∧¬Q)∨(Q∧¬P))) ↔ (P∧¬P) := by
+  rw [← @not_not (P∧¬Q),← @not_not (Q∧¬P)]
+  rw [← not_and_or]
+  rw [@not_and_or P (¬Q), @not_and_or Q (¬P)]
+  repeat rw [not_not]
+  repeat rw [← imp_iff_not_or]
+  rw [← iff_iff_implies_and_implies]
+  have iff_not_self_iff_false (P : Prop) : (P↔¬P)↔False := by
+    rw [@iff_iff_implies_and_implies P (¬P)]
+    nth_rw 4 [← @not_not P]
+    repeat rw [imp_not_self]
+    rw [and_not_self_iff]
+  -- have iii (P : Prop) : ¬(P↔¬P):= iff_not_self
+  -- rw [← @false_iff (P↔Q)] at iii
+  -- rw [← @iii (P ↔ Q)]
+  -- have iii (P : Prop) := iff_not_self P
+  rw [iff_not_self_iff_false]
+  rw [and_not_self_iff]
