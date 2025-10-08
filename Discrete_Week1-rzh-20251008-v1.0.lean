@@ -225,3 +225,34 @@ theorem my_not_or (P Q : Prop) :
     rw [h, not_true, true_or, false_and, not_true]
   · rw [← @iff_false P] at h
     rw [h, not_false_iff, false_or, true_and]
+
+
+-- Homework
+
+example (Q S E U : Prop)
+  (h1 : ¬Q ∨ S) (h2 : (E → ¬U) → ¬S) :
+  Q → E := by
+  rw [← imp_iff_not_or] at h1
+  rw [← not_imp_not, not_not] at h2
+  rw [@imp_iff_not_or E ¬U, not_or, not_not, not_not] at h2
+  intro h
+  apply h1 at h
+  apply h2 at h
+  exact h.left
+
+example (P Q R S : Prop)
+  (h1 : ¬P → Q) (h2 : Q → ¬R) (h3 : (R ∧ ¬S) ∨ (¬R ∧ S)) (h4 : ¬S) :
+  P := by
+  have h12 : ¬P→¬R := by
+    intro h0
+    apply h2
+    apply h1
+    exact h0
+  rw [not_imp_not] at h12
+  apply Or.intro_right R at h4
+  rw [or_comm] at h3
+  nth_rw 1 [← @not_not S] at h3
+  rw [← not_or, ← imp_iff_not_or] at h3
+  apply h3 at h4
+  apply h12
+  exact h4.left

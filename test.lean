@@ -72,3 +72,9 @@ theorem exercise_2_1_4 (P Q : Prop) :
   -- have iii (P : Prop) := iff_not_self P
   rw [iff_not_self_iff_false]
   rw [and_not_self_iff]
+
+theorem test0 (P Q : Prop) (h1 : P) (h2 : Q) :
+  P∧Q := by
+  apply And.intro
+  · exact h1
+  · exact h2
