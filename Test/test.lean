@@ -78,3 +78,16 @@ theorem test0 (P Q : Prop) (h1 : P) (h2 : Q) :
   apply And.intro
   · exact h1
   · exact h2
+
+example (P Q R : Prop)
+  (h1 : P → Q) (h2 : Q → R) :
+  P → R := h2 ∘ h1 -- 中间一个复合符号 \comp 或 \circ
+
+
+-- #leansearch "(P↔¬P)↔False ?"
+
+  -- P → R := by
+  -- intro h
+  -- exact h2 (h1 h)
+
+-- #leansearch "function prorduct ?"
