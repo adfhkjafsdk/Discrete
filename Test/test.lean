@@ -91,3 +91,14 @@ example (P Q R : Prop)
   -- exact h2 (h1 h)
 
 -- #leansearch "function prorduct ?"
+
+theorem thm281_13 (P Q R S : Prop) (h : (P → Q) ∧ (R → S) ∧ (P ∨ R)) :
+  Q ∨ S := by
+  rcases h with ⟨h1, h2, h3⟩
+  cases h3 with
+    | inl hp => -- exact Or.intro_left S (h1 hp)
+      apply Or.intro_left
+      exact h1 hp
+    | inr hq =>
+      apply Or.intro_right
+      exact h2 hq
